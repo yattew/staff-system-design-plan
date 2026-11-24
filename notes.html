@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff System Design & AI Systems — Living Notes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    .glass-card { background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%); border: 1px solid rgba(255, 255, 255, 0.08); }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0b0f19; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 md:px-8">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-emerald-500 flex items-center justify-center font-black text-slate-950 text-lg shadow-lg">
+          N
+        </div>
+        <div>
+          <h1 class="text-base font-bold text-white leading-tight">Staff Engineering Notes & Decision Logs</h1>
+          <p class="text-xs text-slate-400">Living Knowledge Base • Updated via Antigravity</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-cyan-400 hover:text-white transition">← Back to Master Plan</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 md:px-8 py-8 space-y-8">
+    <!-- Intro Card -->
+    <div class="glass-card rounded-2xl p-6 border border-slate-800">
+      <h2 class="text-lg font-bold text-white mb-2">Welcome to Your Staff Architecture Vault</h2>
+      <p class="text-xs text-slate-300 leading-relaxed">
+        This living notebook stores synthesized trade-offs, first-principles mechanics, and interview soundbites from your daily study. Whenever you finish a reading block, tell Antigravity your takeaways—I will critique your mental model, add production edge cases, and push the notes here automatically.
+      </p>
+    </div>
+
+    <!-- Notes Container -->
+    <div class="space-y-6" id="notesList">
+      <!-- Sample Entry: Week 1 Foundation -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">Week 1</span>
+            <h3 class="text-base font-bold text-white">Layer 4 (Maglev) vs. Layer 7 (Envoy) Load Balancing</h3>
+          </div>
+          <span class="text-xs font-mono text-slate-400">Nov 24 – Nov 29, 2026</span>
+        </div>
+
+        <!-- First Principles -->
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">First-Principles Architecture:</div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            • <strong>Layer 4 (L4 / Maglev):</strong> Operates on TCP/UDP 5-tuple (Src IP, Src Port, Dst IP, Dst Port, Protocol). Does not inspect HTTP payload or terminate TLS. Uses ECMP (Equal-Cost Multi-Path) routing and consistent hashing lookup tables to achieve line-rate throughput without maintaining per-connection state on central routers.<br>
+            • <strong>Layer 7 (L7 / Envoy):</strong> Terminates TLS, inspects HTTP/2 headers, paths, cookies, and gRPC methods. Employs an event-driven, non-blocking asynchronous thread model (libevent) with worker threads bound to hardware CPU cores.
+          </p>
+        </div>
+
+        <!-- Staff Trade-Off Card -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-emerald-400 font-bold block mb-1">✅ When to use L4 (Maglev):</span>
+            <p class="text-slate-300">Front-door packet routing where raw throughput is paramount (>1M QPS). Perfect for spraying incoming traffic across a pool of L7 proxies with zero connection drops during autoscaling.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-rose-400 font-bold block mb-1">⚠️ When L4 fails (Why you need L7):</span>
+            <p class="text-slate-300">L4 cannot do path-based routing (e.g. <code>/api/checkout</code> vs <code>/api/search</code>), cannot do gRPC stream-level load balancing, and cannot inspect JWT auth tokens or enforce per-tenant rate limits.</p>
+          </div>
+        </div>
+
+        <!-- The Staff Soundbite -->
+        <div class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs">
+          <span class="text-cyan-400 font-bold block mb-1 uppercase tracking-wider text-[10px]">🎙️ The Staff Interview Soundbite:</span>
+          <p class="text-slate-200 italic">
+            "In a production system handling millions of requests per second, I would deploy a two-tiered ingress architecture: Maglev at Layer 4 using ECMP routing to distribute packets across a pool of Envoy Layer 7 proxies. Envoy terminates TLS and performs intelligent gRPC request-level load balancing, while Maglev ensures zero TCP connection reset storms during proxy rollouts."
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
