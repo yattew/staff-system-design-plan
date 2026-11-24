@@ -431,3 +431,26 @@ A true Staff Engineer does not speak only in abstract theory—they reference ha
 * **The Feat:** Zero duplicate transactions and mathematically immutable auditing across billions of API payments.
 * **The Architecture:** Two-tiered idempotency: Gateway-level lease reservation on Redis + transactional database commits with double-entry bookkeeping ledgers.
 * **Staff Deep Dive:** Replay attacks, atomic state transitions, and asynchronous bank statement clearing reconciliations.
+
+### 7. Uber Michelangelo — The Birth of the Enterprise Feature Store (Weeks 23 & 24)
+* **The Feat:** Scaling Uber from fragmented data science scripts into a unified platform serving millions of ML predictions/sec for dynamic pricing, ETAs, and fraud.
+* **The Architecture:** The pioneer of the **Dual-Engine Feature Store**: Offline batch features computed via Spark into HDFS/Hive, and streaming real-time features computed via Flink into Cassandra/Redis.
+* **Staff Deep Dive:** Eliminating **Training-Serving Skew** using unified feature definition pipelines. Guarantees that feature transformations (e.g. "driver's acceptance rate over last 10 minutes") use identical code and point-in-time snapshot logic in offline model training as in online microsecond inference.
+
+### 8. Netflix Nearline ML Pipeline — Hybrid Offline/Online Personalization (Week 24)
+* **The Feat:** Personalizing the homepage for 250M+ users with sub-second adaptation to what a user just clicked or watched.
+* **The Architecture:** Three-tiered ML topology:
+  1. **Offline Layer:** Heavy matrix factorization and deep neural networks trained overnight on Apache Spark.
+  2. **Nearline Layer:** Streaming Kafka + Flink pipeline that processes viewing events, updates user session context, and computes real-time ranking adjustments in < 500ms.
+  3. **Online Layer:** Ultra-low latency microservice combining pre-computed offline candidate sets with fresh nearline session state to render recommendations.
+* **Staff Deep Dive:** Graceful degradation. If the nearline streaming pipeline lags or fails, the online layer automatically falls back to cached offline candidate sets with zero user disruption.
+
+### 9. Pinterest PinSage — Billion-Scale Graph Neural Network Pipeline (Week 34)
+* **The Feat:** Generating deep embeddings across 3 Billion visual pins and 18 Billion boards for real-time visual search and related item feeds.
+* **The Architecture:** Graph Convolutional Networks (GCN) trained using MapReduce/Spark on multi-GPU clusters using localized random-walk neighborhood sampling.
+* **Staff Deep Dive:** Scaling GCNs to billions of nodes without running out of GPU VRAM by sampling sub-graphs dynamically, exporting embeddings into high-throughput HNSW vector clusters.
+
+### 10. ByteDance Monolith — Real-Time Streaming Recommendation Engine (Week 35)
+* **The Feat:** Real-time recommendation loop for TikTok where user clicks, watch times, and skips update ranking models in sub-minute streaming cycles.
+* **The Architecture:** Collisionless dynamic embedding hash tables that allocate memory on-the-fly for newly trending items, decoupled parameter servers, and asynchronous streaming checkpointing.
+* **Staff Deep Dive:** Replacing traditional daily/hourly batch model retraining with continuous parameter synchronization over high-speed networks.

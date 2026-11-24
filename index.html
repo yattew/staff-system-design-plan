@@ -72,6 +72,50 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/40 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Uber • Michelangelo</span>
+            <span class="text-[10px] font-mono text-slate-500">Week 23</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Dual-Engine Feature Store</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Spark for offline training + Flink into Cassandra for online inference. Eliminated training-serving skew with unified point-in-time feature definitions.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Netflix • Nearline ML</span>
+            <span class="text-[10px] font-mono text-slate-500">Week 24</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Sub-Second Adaptation</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            3-tier topology: Offline Spark training + Kafka/Flink nearline streaming session state (<500ms) + Online fallback to cached candidates.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-rose-500/40 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Pinterest • PinSage</span>
+            <span class="text-[10px] font-mono text-slate-500">Week 34</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Billion-Scale Graph Embeddings</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Random-walk GCN on 3B pins and 18B boards. Solved GPU VRAM limits via localized neighborhood sampling, exported to distributed HNSW indexes.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-amber-500/40 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">ByteDance • Monolith</span>
+            <span class="text-[10px] font-mono text-slate-500">Week 35</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Real-Time Streaming Ranking</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            TikTok's real-time ranking engine. Collisionless dynamic embedding tables that update model weights from streaming user interactions in sub-minute loops.
+          </p>
+        </div>
+
         
         <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/40 transition">
           <div class="flex items-center justify-between mb-1.5">

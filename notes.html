@@ -48,6 +48,83 @@
     <!-- Notes Container -->
     <div class="space-y-6" id="notesList">
 
+      <!-- Case Study Entry: Uber Michelangelo -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">AI Case Study</span>
+            <h3 class="text-base font-bold text-white">Uber Michelangelo: The Pioneer of the Enterprise Feature Store</h3>
+          </div>
+          <span class="text-xs font-mono text-slate-400">Week 23 • Production MLOps</span>
+        </div>
+
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">First-Principles Architecture:</div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            • <strong>Dual-Storage Architecture:</strong> Offline features computed in bulk via Spark into HDFS/Hive (optimized for high-throughput scans during training) paired with online low-latency features pushed into Cassandra/Redis (optimized for single-digit millisecond key-value lookups during live ride dispatch).<br>
+            • <strong>Eliminating Training-Serving Skew:</strong> Centralized feature definitions in a shared registry. Features like "average driver ratings over 30 days" use the exact same transformation code in offline model backtesting as during online live inference.<br>
+            • <strong>Point-in-Time Correctness:</strong> Time-travel joins guarantee that when generating training data for a ride in May, only feature values timestamped *before* that ride occurred are joined, preventing data leakage from the future.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-emerald-400 font-bold block mb-1">✅ The Staff Architectural Lesson:</span>
+            <p class="text-slate-300">Feature calculation must be decoupled from both data ingestion and model training. A centralized Feature Store converts custom one-off data wrangling into shared, versioned, reusable enterprise assets.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-rose-400 font-bold block mb-1">⚠️ The Production Gotcha:</span>
+            <p class="text-slate-300">Synchronization lag. If the streaming pipeline updating the online Redis store experiences Kafka consumer lag, the model makes decisions on stale features. Health alerts on feature freshness SLAs are mandatory.</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs">
+          <span class="text-cyan-400 font-bold block mb-1 uppercase tracking-wider text-[10px]">🎙️ The Staff Interview Soundbite:</span>
+          <p class="text-slate-200 italic">
+            "To prevent training-serving skew and silent model decay in high-frequency ML applications, I would architect a centralized Feature Store modeled after Uber Michelangelo. We compute features once via streaming engines into low-latency Redis for online inference, and mirror snapshots to our Data Lakehouse for point-in-time consistent training datasets."
+          </p>
+        </div>
+      </div>
+
+      <!-- Case Study Entry: Netflix Nearline ML -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-xs font-bold">AI Case Study</span>
+            <h3 class="text-base font-bold text-white">Netflix Nearline ML Architecture: Real-Time Personalization at Scale</h3>
+          </div>
+          <span class="text-xs font-mono text-slate-400">Week 24 • Streaming ML</span>
+        </div>
+
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">First-Principles Architecture:</div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            • <strong>3-Tier Decoupling:</strong> Offline (Spark batch matrix factorization overnight) → Nearline (Kafka + Apache Flink streaming pipeline updating session context in < 500ms) → Online (Low-latency recommendation ranking microservice).<br>
+            • <strong>Event-Driven State Updates:</strong> When a user watches 30 seconds of an anime, Flink captures the playback event, increments genre affinities in an in-memory session cache, and re-ranks the candidate pool before the user navigates back to the homepage.<br>
+            • <strong>Graceful Fallback & Circuit Breaking:</strong> If the nearline streaming pipeline suffers backpressure or downtime, the online layer seamlessly falls back to pre-computed static offline recommendations with zero user disruption.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-emerald-400 font-bold block mb-1">✅ The Staff Architectural Lesson:</span>
+            <p class="text-slate-300">Don't try to run heavy deep neural networks end-to-end on every user click. Heavy models run offline to generate candidate sets; lightweight streaming scoring engines adjust rankings on the fly in real-time.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-rose-400 font-bold block mb-1">⚠️ The Production Gotcha:</span>
+            <p class="text-slate-300">Session state cache eviction. Inactive users must have their ephemeral session state evicted to prevent memory bloat, smoothly reloading baseline profiles on subsequent app launches.</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs">
+          <span class="text-cyan-400 font-bold block mb-1 uppercase tracking-wider text-[10px]">🎙️ The Staff Interview Soundbite:</span>
+          <p class="text-slate-200 italic">
+            "For ultra-responsive personalization across hundreds of millions of users, I follow Netflix's 3-tier Nearline pattern: heavy matrix factorization and embeddings are trained offline, while an Apache Flink streaming pipeline consumes user interaction events to adjust ranking scores within 500ms, with immediate fallback to static offline candidates if streaming degrades."
+          </p>
+        </div>
+      </div>
+
+
       <!-- Case Study Entry: WhatsApp Erlang Architecture -->
       <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
