@@ -47,6 +47,83 @@
 
     <!-- Notes Container -->
     <div class="space-y-6" id="notesList">
+
+      <!-- Case Study Entry: WhatsApp Erlang Architecture -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">Case Study</span>
+            <h3 class="text-base font-bold text-white">WhatsApp: 2 Million TCP Connections per Box (Erlang / FreeBSD)</h3>
+          </div>
+          <span class="text-xs font-mono text-slate-400">Week 9 • High-Scale Chat</span>
+        </div>
+
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">First-Principles Architecture:</div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            • <strong>Erlang BEAM Actor Model:</strong> Rather than allocating a 1MB OS thread per user, Erlang creates lightweight user-space processes costing only ~2.5 KB of RAM each. 2 Million concurrent connections consumed only ~5 GB of user memory.<br>
+            • <strong>FreeBSD Kernel Tuning:</strong> Tuned socket buffers to drop memory per socket down to bare minimums (<code>kern.ipc.maxsockets</code> bumped to millions; <code>net.inet.tcp.recvspace</code> and <code>sendspace</code> shrunk so idle connections didn't waste kernel memory).<br>
+            • <strong>Ejabberd Stripping:</strong> Replaced bloated XML parsing with compact binary protocols and patched Mnesia database code to eliminate lock contention on shared routing tables.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-emerald-400 font-bold block mb-1">✅ Why Erlang was the Staff choice:</span>
+            <p class="text-slate-300">Share-nothing actor model means one user's crash or timeout never impacts another. Built-in supervision trees automatically revive failed worker processes without restarting the server.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-rose-400 font-bold block mb-1">⚠️ The Production Gotcha (What to watch for):</span>
+            <p class="text-slate-300">Erlang message mailboxes are unbounded. If a fast producer sends messages to a slow consumer process, the mailbox grows indefinitely and silently exhausts RAM. Production Erlang requires explicit backpressure queue limits.</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs">
+          <span class="text-cyan-400 font-bold block mb-1 uppercase tracking-wider text-[10px]">🎙️ The Staff Interview Soundbite:</span>
+          <p class="text-slate-200 italic">
+            "When designing a multi-million-connection chat gateway, thread-per-connection architectures fail due to OS thread context-switching and stack memory overhead. I would leverage the lightweight actor model (Erlang BEAM or Go goroutines with an epoll/kqueue event loop), paired with aggressive kernel socket buffer minimization, mirroring WhatsApp's 2M-connection architecture."
+          </p>
+        </div>
+      </div>
+
+      <!-- Case Study Entry: Grammarly Common Lisp Core -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-mono text-xs font-bold">Case Study</span>
+            <h3 class="text-base font-bold text-white">Grammarly: Native Common Lisp Core Engine for AST Tree Parsing</h3>
+          </div>
+          <span class="text-xs font-mono text-slate-400">Week 26 • High-Speed Parsing</span>
+        </div>
+
+        <div>
+          <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">First-Principles Architecture:</div>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            • <strong>Homoiconicity (Code-as-Data):</strong> In Common Lisp, data structures and code share the exact same representation (S-expressions). Grammatical rules, sentence structures, and syntactic trees are native AST structures that can be traversed, pattern-matched, and rewritten without serialization overhead.<br>
+            • <strong>Compiled SBCL Performance:</strong> Steel Bank Common Lisp (SBCL) compiles directly to native assembly (x86-64), delivering performance competitive with optimized C++ while retaining dynamic functional expressiveness.<br>
+            • <strong>Polyglot Microservice Boundary:</strong> The high-performance Lisp engine runs as a stateless, hermetic core service, wrapped in modern C++/Go/Java RPC interfaces for cloud scaling and observability.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-emerald-400 font-bold block mb-1">✅ The Architectural Lesson:</span>
+            <p class="text-slate-300">Don't force a general-purpose language when a domain-specific paradigm (Lisp for symbolic AST manipulation) offers an order-of-magnitude reduction in latency and code complexity. Isolate specialized engines behind standard gRPC boundaries.</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <span class="text-rose-400 font-bold block mb-1">⚠️ The Production Gotcha:</span>
+            <p class="text-slate-300">Talent and tooling isolation. Operating uncommon runtime engines requires custom telemetry collectors, profiling tools, and specialized hiring, which is why boundary encapsulation is mandatory.</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs">
+          <span class="text-cyan-400 font-bold block mb-1 uppercase tracking-wider text-[10px]">🎙️ The Staff Interview Soundbite:</span>
+          <p class="text-slate-200 italic">
+            "For complex rule-evaluation and symbolic AST processing, a Staff engineer evaluates execution paradigm over hype. As Grammarly demonstrated with Common Lisp, choosing a runtime with native tree homoiconicity compiled to machine code can yield 10x throughput advantages over standard enterprise runtimes, provided it is cleanly encapsulated behind standard network boundaries."
+          </p>
+        </div>
+      </div>
+
       <!-- Sample Entry: Week 1 Foundation -->
       <div class="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">

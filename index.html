@@ -56,6 +56,93 @@
     </div>
   </div>
 
+  
+  <!-- Legendary Case Studies Showcase -->
+  <div class="max-w-7xl mx-auto px-4 md:px-8 pt-4 pb-2">
+    <div class="glass-card rounded-2xl p-6 border border-slate-800 shadow-xl">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">🏛️</span>
+          <div>
+            <h2 class="text-base font-bold text-white">Legendary Production Case Studies</h2>
+            <p class="text-xs text-slate-400">Hard-won architectural history woven into your 40-week curriculum</p>
+          </div>
+        </div>
+        <span class="px-2.5 py-1 rounded-md bg-purple-500/10 border border-purple-500/20 text-purple-400 font-mono text-[11px] font-bold">Staff Goldmine</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+        
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/40 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">WhatsApp • Erlang / BEAM</span>
+            <span class="text-[10px] font-mono text-slate-500">Week 9</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">2M Connections per Box</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            35 engineers running 900M users. Lightweight BEAM actor processes (~2.5KB RAM) + FreeBSD <code class="text-emerald-300">kqueue</code> kernel socket buffer tuning.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Grammarly • Common Lisp</span>
+            <span class="text-[10px] font-mono text-slate-500">Week 26</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Microsecond AST Rule Engine</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Compiled Common Lisp on SBCL. Code-as-data homoiconicity enabled 10x faster grammar tree mutations with a fraction of Java/Python's memory footprint.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-rose-500/40 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Discord • Go to Rust</span>
+            <span class="text-[10px] font-mono text-slate-500">Week 4</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Eliminating the GC Cliff</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Go's memory allocator and GC passes caused 2-second CPU cache-thrashing latency spikes across millions of channels. Rust dropped P99 from 2,000ms to < 5ms.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-amber-500/40 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Figma • Rust + Wasm</span>
+            <span class="text-[10px] font-mono text-slate-500">Week 10</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Multiplayer CRDTs at 60 FPS</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Custom operational transformation/CRDT engine in Rust running in-browser via WebAssembly, synchronized over WebSockets with central Rust coordinators.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/40 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">LMAX • Mechanical Sympathy</span>
+            <span class="text-[10px] font-mono text-slate-500">Week 27</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">6M Trades/Sec Single-Thread</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            The Disruptor pattern: lock-free circular ring buffers with cache-line padding (64 bytes) to eliminate False Sharing on CPU L1/L2/L3 caches.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-blue-500/40 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Stripe • Idempotency Engine</span>
+            <span class="text-[10px] font-mono text-slate-500">Week 26</span>
+          </div>
+          <h3 class="text-sm font-bold text-white mb-1">Zero Duplicate Charges</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Two-tier idempotency: Redis lease locks at gateway + transactional database commits with immutable double-entry bookkeeping ledgers.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- Main Container -->
   <main class="max-w-7xl mx-auto px-4 md:px-8 py-6 space-y-8" id="phasesContainer">
     <!-- Populated via JS -->

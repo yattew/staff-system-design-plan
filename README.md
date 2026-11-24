@@ -395,3 +395,39 @@ At mid-level, you know the components. At senior, you know the failure modes. **
     3. *"Explain why you chose Kafka + Flink over a simple Celery + Redis queue for this pipeline."*
   * Finalize resume highlighting enterprise AI platform achievements, scale, throughput, and reliability metrics.
   * Launch live applications on **TokyoDev** and **Japan Dev** to **Mercari, PayPay, Woven by Toyota, and Line Yahoo**.
+
+---
+
+## 🏛️ Legendary Production Case Studies (Integrated Across Curriculum)
+
+A true Staff Engineer does not speak only in abstract theory—they reference hard-won engineering history from the industry's most legendary production systems. These exact case studies are baked directly into your 40 weeks:
+
+### 1. The WhatsApp Erlang Architecture (Week 9 - Chat at Scale)
+* **The Feat:** Only ~35 to 50 engineers supporting **900 Million (and later 1 Billion+) users** on ~few hundred servers.
+* **The Architecture:** Erlang BEAM virtual machine on FreeBSD. Each user connection handled by a lightweight BEAM actor process (costing only ~2.5 KB of RAM vs 1MB+ OS threads).
+* **Staff Deep Dive:** Rick Reed’s famous *"1 Million is so 2011 — 2 Million connections per box"* optimizations: tuning FreeBSD kernel network stack buffers (`kern.ipc.maxsockets`, `net.inet.tcp.recvspace`), offloading TLS, and hacking ejabberd for zero-copy message fanout.
+
+### 2. Grammarly’s Common Lisp Engine (Week 26 - High-Speed Parsing)
+* **The Feat:** Parsing tens of millions of grammatical rules per second with deterministic microsecond latency.
+* **The Architecture:** Written in **Common Lisp** running natively compiled on SBCL (Steel Bank Common Lisp).
+* **Staff Deep Dive:** Why Lisp for enterprise AI? Abstract Syntax Tree (AST) transformations are native to Lisp (code-as-data/homoiconicity). It delivered 10x lower memory overhead and vastly faster rule-tree evaluation than Java or Python would allow, wrapped in C++/Go service boundaries.
+
+### 3. Why Discord Switched from Go to Rust (Week 4 - Tail Latency & GC Cliffs)
+* **The Feat:** Eliminating recurrent P99 latency spikes in Discord’s Read States service (handling millions of messages).
+* **The Architecture:** Re-architecting from Go to Rust.
+* **Staff Deep Dive:** Go’s memory allocator and Garbage Collector ran every 2 minutes. Even with Go's fast concurrent collector, traversing millions of active chat channels in memory caused severe 2-second CPU cache thrashing. Moving to Rust eliminated the GC entirely, dropping P99 tail latency from **2,000ms to < 5ms**.
+
+### 4. Figma’s Multiplayer Engine (Week 10 - Collaborative CRDTs)
+* **The Feat:** Smooth 60fps real-time multiplayer design across thousands of concurrent users in a single canvas.
+* **The Architecture:** Custom operational transformation/CRDT engine written in Rust and compiled to WebAssembly (Wasm) in the browser, synchronized over WebSockets with central server-side Rust coordinators.
+* **Staff Deep Dive:** Client-side optimistic rendering, vector clock state reconciliation, and handling out-of-order network updates without locking the browser UI thread.
+
+### 5. The LMAX Disruptor (Week 27 - Ultra-Low Latency Matching)
+* **The Feat:** Processing **6 Million financial transactions per second** on a single thread on standard JVM hardware.
+* **The Architecture:** Circular ring buffer with zero-lock concurrency, memory pre-allocation, and cache-line padding.
+* **Staff Deep Dive:** Mechanical Sympathy—designing software to align with CPU hardware L1/L2/L3 cache line size (64 bytes) to eliminate False Sharing and lock contention.
+
+### 6. Stripe’s Idempotency & Ledger Engine (Week 26 - Financial Correctness)
+* **The Feat:** Zero duplicate transactions and mathematically immutable auditing across billions of API payments.
+* **The Architecture:** Two-tiered idempotency: Gateway-level lease reservation on Redis + transactional database commits with double-entry bookkeeping ledgers.
+* **Staff Deep Dive:** Replay attacks, atomic state transitions, and asynchronous bank statement clearing reconciliations.
